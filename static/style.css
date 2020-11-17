@@ -1,0 +1,304 @@
+.zz-logo {
+position: absolute;
+width: 133px;
+height: 85px;
+left: 638px;
+top: 0px;
+
+font-family: Segoe UI;
+font-style: normal;
+font-weight: bold;
+font-size: 64px;
+line-height: 85px;
+
+color: #8065FF;
+}
+
+.zz-nav{
+
+height: 83px;
+left: 0px;
+}
+
+.zz-nav-header{
+
+  height: 87px;
+  left: 0px;
+  }
+
+.zz-nav1:link{
+position: absolute;
+width: 55px;
+height: 24px;
+left: 63px;
+top: 29px;
+text-decoration: none;
+
+font-family: Segoe UI;
+font-style: normal;
+font-weight: normal;
+font-size: 18px;
+line-height: 24px;
+/* identical to box height */
+
+letter-spacing: 0.05em;
+
+color: #25282B;
+}
+
+.zz-nav2:link{
+position: absolute;
+width: 96px;
+height: 24px;
+left: 142px;
+top: 29px;
+text-decoration: none;
+
+font-family: Segoe UI;
+font-style: normal;
+font-weight: normal;
+font-size: 18px;
+line-height: 24px;
+/* identical to box height */
+
+letter-spacing: 0.05em;
+
+color: #25282B;
+
+}
+
+.zz-searchbar[type=text]{
+    width: 200px;
+    height: 38px;
+    padding: 12px 12px 12px 40px;  
+    background-color: #FFFFFF;
+    border: 1px solid #AAA6A6;
+    border-radius: 4px;
+    box-sizing: border-box;
+    transition: width 0.4s ease-in-out;
+}
+
+.zz-searchbar[type=text]:focus{ 
+    width: 50%;
+    border: 1px solid #8065FF;
+    box-sizing: border-box;
+ 
+}
+
+
+.zz-searchbar[type=text]::-webkit-input-placeholder{
+font-family: Arial;
+font-size: 17px;
+line-height: 20px;
+
+
+color: #999595;
+
+}
+
+.zz-searchbutton{
+position: absolute;
+width: 88px;
+height: 38px;
+left: 939px;
+top: 24px;
+
+font-family: Segoe UI;
+font-style: normal;
+font-weight: bold;
+font-size: 14px;
+line-height: 19px;
+/* identical to box height */
+
+
+color: #FCFAFA;
+
+background: #8065FF;
+box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+border-radius: 4px;
+/* transform: matrix(-1, 0, 0, 1, 0, 0); */
+}
+
+.zz-banner{
+height: 394px;
+}
+
+.zz-line{
+width: 1440px;
+height: 0px;
+
+
+border: 1px solid #25282B;
+
+}
+
+.zz-heading{
+    /* position: absolute;
+width: 242px;
+height: 36px;
+left: 63px;
+top: 651px; */
+
+font-family: Segoe UI;
+font-style: normal;
+font-weight: bold;
+font-size: 27px;
+line-height: 36px;
+/* identical to box height */
+
+
+color: #8065FF;
+}
+
+.zz-small-heading{
+    font-family: Segoe UI;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 21px;
+    
+    color: #000000;
+}
+
+.zz-newsletter{
+    height: 335px;
+    background: #33334F;
+}
+
+.zz-newsletter-heading{
+font-family: Segoe UI;
+font-style: normal;
+font-weight: 600;
+font-size: 36px;
+line-height: 48px;
+/* identical to box height */
+
+text-align: center;
+color: #FFFFFF;
+
+}
+
+.zz-newsletter-content{
+    font-family: Segoe UI;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 32px;
+    text-align: center;
+    
+    color: #FFFFFF;
+    }
+    
+.zz-card{
+width: 375px;
+height: 324px;
+margin-top: 53px;
+margin-left: 118;
+margin-right: 53px;
+background: #FFFFFF;
+box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.zz-card img{
+position: absolute;
+width: 148px;
+height: 238px;
+margin-top: 7px;
+margin-left: 40px;
+margin-right: 187px;
+margin-bottom: 79px;
+border: 3px solid #FFFFFF;
+box-sizing: border-box;
+}
+
+/* .zz-card h5{
+font-family: Segoe UI;
+font-style: normal;
+font-weight: normal;
+font-size: 24px;
+line-height: 25px;
+margin-top: 251px;
+margin-left: 40px;
+margin-right: 48px;
+margin-bottom: 79px;
+/* identical to box height, or 104% */
+
+/* text-align: center;
+
+color: #000000;
+}
+
+.zz-card h6{
+font-family: Segoe UI;
+font-style: normal;
+font-weight: bold;
+font-size: 18px;
+line-height: 25px;
+margin-top: 281px;
+margin-left: 40px;
+margin-right: 260;
+margin-bottom: 18px;
+/* identical to box height, or 139% */
+
+/* text-align: center;
+
+color: #000000;
+    }
+
+.zz-rounded-btn{
+    box-sizing: border-box;
+    border-radius: 10px;
+    background: #FFFFFF;
+    margin-right: 20;
+    padding: 10;
+    border: 1px, solid, #FFFFFF
+} */
+
+.zz-social{
+height: 87px;
+
+
+background: #33334F;
+}
+
+.zz-product-container{
+width: 628px;
+height: 617px;
+
+border: 1px solid #C4C4C4;
+box-sizing: border-box;
+}
+
+.zz-product-title{
+font-family: Roboto;
+font-style: normal;
+font-weight: normal;
+font-size: 36px;
+line-height: 25px;
+/* or 69% */
+
+
+color: #000000;
+
+}
+.zz-product-stock{
+font-family: Segoe UI;
+font-style: normal;
+font-weight: normal;
+font-size: 16px;
+line-height: 25px;
+/* identical to box height, or 156% */
+
+
+color: #000000;
+}
+
+.zz-product-price{
+font-family: Raleway;
+font-style: normal;
+font-weight: 600;
+font-size: 36px;
+line-height: 42px;
+
+color: #F70C1A;
+}
