@@ -16,12 +16,12 @@ class Products(models.Model):
 
 
 class ProductImages(models.Model):
-    product = models.OneToOneField(Products, on_delete=models.CASCADE)
+    product = models.ForeignKey(Products, on_delete=models.CASCADE)
     image = models.ImageField(upload_to='product_images')
 
 
 class ProductOption(models.Model):
-    product = models.OneToOneField(Products, on_delete=models.CASCADE)
+    product = models.ForeignKey(Products, on_delete=models.CASCADE)
     name = models.CharField(max_length=120, blank=True, null=True)
 
 

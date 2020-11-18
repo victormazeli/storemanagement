@@ -27,4 +27,5 @@ urlpatterns = [
     path('auth/', include('djoser.urls.authtoken')),
     path('api/', include('api.urls')),
     # path('products/', include('products.urls')),
+
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
