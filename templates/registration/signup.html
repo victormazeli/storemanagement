@@ -1,0 +1,93 @@
+{% load static %}
+{% load crispy_forms_tags %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- CSS -->
+        <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+        <link rel="stylesheet" href="{% static 'css/style.css' %}">
+        <script>
+          window.onload = function (){
+            var cart = localStorage.length;
+            var cartid = document.getElementById('crtno');
+            cartid.innerText = cart;
+          }
+        </script>
+  
+    </head>
+    <body>
+    <div>
+    <nav class="navbar navbar-light bg-white justify-content-center zz-nav-header">
+    <a class="navbar-brand" href="#">
+        <img src="zeus logo (1).png"  alt="" loading="lazy">
+    </a>
+    </nav>
+    <nav class="nav my-2 my-lg-2 bg-light d-flex justify-content-between">
+      <div class="d-flex justify-content-start">
+        <a class="nav-link text-dark  my-4 " href="#">Home</a>
+        <a class="nav-link text-dark my-4 " href="{% url 'collection' %}">Product</a>
+      </div>
+      <div class="d-flex justify-content-end mr-3">
+        <a class="nav-link text-dark  my-4 " href="#"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-search" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z"/>
+          <path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
+        </svg> Search</a>
+        <a class="nav-link text-dark  my-4 " href="#"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-person-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+        </svg> Account</a>
+        <a class="nav-link text-dark  my-4" href="{% url 'cart' %}"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-cart-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm7 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
+        </svg> Cart <span class="badge badge-pill badge-primary" id="crtno">0</span></a>
+      </div>
+      </nav>
+
+      
+        
+
+      <div class="container">
+        <h2 class="text-center my-3">Lets Get Started</h2>
+        <p class="text-center my-2">Create an account and get amazing offers</p>
+       
+        <form action="{% url 'signup' %}" method="post" class="w-50 mx-auto my-5">
+            {% csrf_token %}
+            {{form|crispy}}
+
+            <button type="submit" class="btn btn-outline-primary btn-block">REGISTER</button>
+            <div class="d-flex justify-content-end my-2">
+                <h6>Already a User?</h6>
+                <a href="{% url 'login' %}" class="ml-2">LOGIN</a>
+            </div>
+        </form>
+        
+</div>
+
+ 
+  <footer class="zz-footer-detail p-2">
+      <div class="d-flex justify-content-between">
+       <p class="my-4">&copy; 2010-2020 Privacy-Terms</p>
+      <div class="d-flex justify-content-end">
+       <img src="{% static 'img/master.png' %}" class="my-4" alt="">
+       <img src="{% static 'img/vis.png' %}" class="my-4" alt="">
+      </div>
+      </div>
+
+  </footer>
+
+<!-- jQuery and JS bundle w/ Popper.js -->
+<script src="{% static 'js/jquery-3.5.1.min.js' %}" ></script>
+<script src="{% static 'js/bootstrap.bundle.js' %}" ></script>
+<script src="{% static 'js/sweetalert2.all.min.js' %}" ></script>
+<script type="text/javascript">
+
+
+
+
+</script>
+       
+</body>
+</html>

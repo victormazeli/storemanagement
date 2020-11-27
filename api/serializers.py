@@ -1,9 +1,10 @@
 from rest_framework import serializers
-from customers.models import Customer, Cart
+from cart.models import Cart
 from orders.models import Orders
 from products.models import Products, ProductImages, ProductVariation, ProductOption
 from Transactions.models import Transaction
-from marchants.models import Marchant, Shop
+from marchants.models import Marchant
+from store.models import Shop
 
 
 
@@ -48,10 +49,10 @@ class ProductOptionSerializer(serializers.ModelSerializer):
         model = ProductOption
         fields = '__all__'
 
-class CustomerSerializer(serializers.ModelSerializer):
-    class Meta:
-      model = Customer
-      fields = '__all__'
+# class CustomerSerializer(serializers.ModelSerializer):
+#     class Meta:
+#       model = Customer
+#       fields = '__all__'
 
 
 class CartSerializer(serializers.ModelSerializer):

@@ -18,6 +18,7 @@ class Marchant(AbstractUser):
     bankname = models.CharField(max_length=256, null=True, blank=True)
     bankaccount_no = models.IntegerField(null=True, blank=True)
     bankcode = models.IntegerField(null=True, blank=True)
+    is_marchant = models.BooleanField(default=False)
   
 
     USERNAME_FIELD = 'email'
@@ -26,8 +27,3 @@ class Marchant(AbstractUser):
     objects = CustomUserManager()
 
 
-class Shop(models.Model):
-    name = models.CharField(max_length=100)
-    logo = models.ImageField(upload_to='logo', null=True, blank=True)
-    description = models.CharField(max_length=256, null=True, blank=True)
-    tagline = models.CharField(max_length=256, null=True, blank=True)

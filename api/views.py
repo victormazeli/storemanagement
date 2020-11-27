@@ -5,22 +5,32 @@ from rest_framework.views import APIView
 from rest_framework import status
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.parsers import MultiPartParser
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.authentication import SessionAuthentication, TokenAuthentication
+from rest_framework_simplejwt.authentication import JWTAuthentication
+from rest_framework.parsers import JSONParser
+from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
-from customers.models import Cart, Customer
+from cart.models import Cart
 from Transactions.models import Transaction
 from marchants.models import Marchant
 from orders.models import Orders
 from products.models import Products, ProductImages, ProductVariation
-from .serializers import CartSerializer, CustomerSerializer, OrderSerializer,  ProductSerializer, ProductImagesSerializer, ProductVariationSerializer, ProductOptionSerializer, TransactionSerializer
+from store.models import Shop
+from .serializers import CartSerializer, OrderSerializer, ShopSerializer, ProductSerializer, ProductImagesSerializer, ProductVariationSerializer, ProductOptionSerializer, TransactionSerializer, UserSerializer
 
 # Create your views here.
-class StoreCustomersList(APIView):
-    def get(self, request, format=None):
-        customer_list = Customer.objects.all()
-        serializer = CustomerSerializer(customer_list, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+# class StoreCustomersList(APIView):
+#     def get(self, request, format=None):
+#         customer_list = Customer.objects.all()
+#         serializer = CustomerSerializer(customer_list, many=True)
+#         return Response(serializer.data, status=status.HTTP_200_OK)
 
 class CustomerCartView(APIView):
+    # parser_classes = [JSONParser]
+    # renderer_classes = [JSONRenderer]
+    # aunthentication_classes = [JWTAuthentication]
+    # permission_classes = [IsAuthenticated]
     def get_object(self, pk):
         try:
             return Cart.objects.get(pk=pk)
@@ -50,6 +60,11 @@ class CustomerCartView(APIView):
 class CustomerCartDetail(APIView):
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['items', 'id', 'customer']
+    # parser_classes = [JSONParser]
+    # renderer_classes = [JSONRenderer]
+    # aunthentication_classes = [TokenAuthentication, SessionAuthentication]
+    # permission_classes = [IsAuthenticated]
+
     def get(self, request, format=None):
         cart = Cart.objects.all()
         serializer = CartSerializer(cart, many=True)
@@ -59,12 +74,21 @@ class CustomerCartDetail(APIView):
 class Orders(APIView):
      filter_backends = [DjangoFilterBackend]
      filterset_fields = ['status', 'id']
+    #  parser_classes = [JSONParser]
+    #  renderer_classes = [JSONRenderer]
+    #  aunthentication_classes = [TokenAuthentication, SessionAuthentication]
+    #  permission_classes = [IsAuthenticated]
+
      def get(self, request, format=True):
         ordereditems = Orders.objects.all()
         serializer = OrderSerializer(ordereditems, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 class Createorders(APIView):
+    # parser_classes = [JSONParser]
+    # renderer_classes = [JSONRenderer]
+    # aunthentication_classes = [TokenAuthentication, SessionAuthentication]
+    # permission_classes = [IsAuthenticated]
     def post(self, request, format=None):
         serializer = OrderSerializer(data=request.data)
         if serializer.is_valid():
@@ -73,10 +97,14 @@ class Createorders(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 class OrdersDetail(APIView):
+    # parser_classes = [JSONParser]
+    # renderer_classes = [JSONRenderer]
+    # aunthentication_classes = [TokenAuthentication, SessionAuthentication]
+    # permission_classes = [IsAuthenticated]
     def get_object(self, pk):
         try:
             return Orders.objects.get(pk=pk)
-        except Order.DoesNotExist:
+        except Orders.DoesNotExist:
             raise Http404
 
     def put(self, request, pk, format=None):
@@ -95,6 +123,11 @@ class OrdersDetail(APIView):
 class StoreProducts(APIView):##ensure to add permission class
      filter_backends = [DjangoFilterBackend]
      filterset_fields = ['id', 'name']
+    #  parser_classes = [JSONParser]
+    #  renderer_classes = [JSONRenderer]
+    #  aunthentication_classes = [TokenAuthentication, SessionAuthentication]
+    #  permission_classes = [IsAuthenticated]
+
      def get(self, request, format=None):
          get_products = Products.objects.all().order_by('-id')
          serializer = ProductSerializer(get_products, many=True)
@@ -102,7 +135,12 @@ class StoreProducts(APIView):##ensure to add permission class
 
 
 class AddProducts(APIView):##ensure to add permission class
-     def post(self, request, format=None):
+    parser_classes = [MultiPartParser]
+    # parser_classes = [JSONParser]
+    # renderer_classes = [JSONRenderer]
+    # aunthentication_classes = [JWTAuthentication]
+    # permission_classes = [IsAuthenticated]
+    def post(self, request, format=None):
          serializer = ProductSerializer(data=request.data)
          if serializer.is_valid():
              serializer.save()
@@ -111,6 +149,11 @@ class AddProducts(APIView):##ensure to add permission class
 
 class ProductImages(APIView):
     parser_classes = [MultiPartParser]
+    # parser_classes = [JSONParser]
+    # renderer_classes = [JSONRenderer]
+    # aunthentication_classes = [TokenAuthentication, SessionAuthentication]
+    # permission_classes = [IsAuthenticated]
+
     def get(self, request, pk, format=None):
         images = ProductImages.objects.filter(product=pk)
         serializer = ProductImagesSerializer(images, many=True)
@@ -124,6 +167,11 @@ class ProductImages(APIView):
          return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST) 
 
 class ProductVariation(APIView):
+    parser_classes = [JSONParser]
+    # renderer_classes = [JSONRenderer]
+    # aunthentication_classes = [TokenAuthentication, SessionAuthentication]
+    # permission_classes = [IsAuthenticated]
+
     def get(self, request, pk, format=None):
         variation = ProductVariation.objects.filter(product=pk)
         serializer = ProductVariationSerializer(variation, many=True)
@@ -137,6 +185,11 @@ class ProductVariation(APIView):
          return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST) 
 
 class ProductOption(APIView):
+    # parser_classes = [JSONParser]
+    # renderer_classes = [JSONRenderer]
+    # aunthentication_classes = [TokenAuthentication, SessionAuthentication]
+    # permission_classes = [IsAuthenticated]
+
     def get(self, request, pk, format=None):
         option = ProductOption.objects.filter(product=pk)
         serializer = ProductOptionSerializer(option, many=True)
@@ -150,6 +203,11 @@ class ProductOption(APIView):
          return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST) 
 
 class StoreProductDetail(APIView):
+    # parser_classes = [JSONParser]
+    # renderer_classes = [JSONRenderer]
+    # aunthentication_classes = [TokenAuthentication, SessionAuthentication]
+    # permission_classes = [IsAuthenticated]
+
     def get_object(self, pk):
         try:
             return Products.objects.get(pk=pk)
@@ -175,6 +233,11 @@ class StoreProductDetail(APIView):
         return Response(status=status.HTTP_204_NO_CONTENT) 
 
 class SalesView(APIView):
+    # parser_classes = [JSONParser]
+    # renderer_classes = [JSONRenderer]
+    # aunthentication_classes = [TokenAuthentication, SessionAuthentication]
+    # permission_classes = [IsAuthenticated]
+
     def get(self, request, format=None):
         wallet = Orders.objects.values('date_created').annotate(daily_sales=Sum('total_cost'))
         serializer = OrderSerializer(wallet)
@@ -183,6 +246,11 @@ class SalesView(APIView):
 class TransactionHistory(APIView):
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['txn_date']
+    # parser_classes = [JSONParser]
+    # renderer_classes = [JSONRenderer]
+    # aunthentication_classes = [TokenAuthentication, SessionAuthentication]
+    # permission_classes = [IsAuthenticated]
+
     def get(self, request, format=None):
         trxn = Transaction.objects.all()
         serializer = TransactionSerializer(trxn, many=True)
@@ -197,6 +265,11 @@ class TransactionHistory(APIView):
 class StoreDetail(APIView):
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['id', 'user']
+    # parser_classes = [JSONParser]
+    # renderer_classes = [JSONRenderer]
+    # aunthentication_classes = [TokenAuthentication, SessionAuthentication]
+    # permission_classes = [IsAuthenticated]
+
 
     def get(self, request, format=None):
         shop = Shop.objects.all()
@@ -206,6 +279,11 @@ class StoreDetail(APIView):
 
 class StoreUpdate(APIView):
     parser_classes = [MultiPartParser]
+    # parser_classes = [JSONParser]
+    # renderer_classes = [JSONRenderer]
+    # aunthentication_classes = [TokenAuthentication, SessionAuthentication]
+    # permission_classes = [IsAuthenticated]
+
 
     try:
         def get_object(self, pk):
@@ -225,6 +303,11 @@ class StoreUpdate(APIView):
 class UserDetail(APIView):
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['id', 'email']
+    # parser_classes = [JSONParser]
+    # renderer_classes = [JSONRenderer]
+    # aunthentication_classes = [TokenAuthentication, SessionAuthentication]
+    # permission_classes = [IsAuthenticated]
+
     
     def get(self, request, format=None):
         user = Marchant.objects.all()
@@ -233,6 +316,11 @@ class UserDetail(APIView):
     
 
 class UserUpdate(APIView):
+    # parser_classes = [JSONParser]
+    # renderer_classes = [JSONRenderer]
+    # aunthentication_classes = [TokenAuthentication, SessionAuthentication]
+    # permission_classes = [IsAuthenticated]
+
     try:
         def get_object(self, pk):
             return Marchant.objects.get(pk=pk)

@@ -1,9 +1,12 @@
-from django.urls import path
+from django.urls import path, include
 from rest_framework.urlpatterns import format_suffix_patterns
+from rest_framework_simplejwt import views as jwt_views
 from api import views
 
 urlpatterns = [
-    path('customers/list/', views.StoreCustomersList.as_view()),
+    # path('customers/list/', views.StoreCustomersList.as_view()),
+    path('token/', jwt_views.TokenObtainPairView.as_view()),
+    path('token/refresh/', jwt_views.TokenRefreshView.as_view()),
     path('cart/list/', views.CustomerCartDetail.as_view()),
     path('cart/update/<int:pk>/', views.CustomerCartView.as_view()),
     path('cart/add/', views.CustomerCartView.as_view()),
@@ -30,6 +33,7 @@ urlpatterns = [
     path('update_store/', views.StoreUpdate.as_view()),
     path('user_update/', views.UserUpdate.as_view()),
     path('user_detail/', views.UserDetail.as_view()),
+    
 
   
 

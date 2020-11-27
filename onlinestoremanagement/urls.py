@@ -15,17 +15,20 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from marchants import views
+from store import views
 from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index, name='home'),
-    path('get/products/', views.products, name='products'),
-    path('auth/', include('djoser.urls')),
-    path('auth/', include('djoser.urls.authtoken')),
+    path('signup', views.Signup, name='signup'),
+    path('payement', views.payement, name='payement'),
+    path('accounts/', include('django.contrib.auth.urls')),
+    path('orders/', include('orders.urls')),
+    # path('auth/', include('djoser.urls.authtoken')),
     path('api/', include('api.urls')),
-    # path('products/', include('products.urls')),
+    path('products/', include('products.urls')),
+    path('cart', include('cart.urls')),
 
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

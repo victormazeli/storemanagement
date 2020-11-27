@@ -1,0 +1,296 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- CSS -->
+        <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+        <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+        <script>
+          window.onload = function (){
+            var cart = localStorage.length;
+            var cartid = document.getElementById('crtno');
+            cartid.innerText = cart;
+          }
+        </script>
+  
+ 
+    </head>
+    <body>
+    <div>
+    <nav class="navbar navbar-light bg-white justify-content-center zz-nav-header">
+    <a class="navbar-brand" href="#">
+        <img src=""  alt="" loading="lazy">
+    </a>
+    </nav>
+      <nav class="nav my-2 my-lg-2 bg-light d-flex justify-content-between">
+        <div class="d-flex justify-content-start">
+          <a class="nav-link text-dark  my-4 " href="#">Home</a>
+          <a class="nav-link text-dark my-4 " href="{% url 'collection' %}">Product</a>
+        </div>
+        <div class="d-flex justify-content-end mr-3">
+          <a class="nav-link text-dark  my-4 " href="#"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-search" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z"/>
+            <path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
+          </svg> Search</a>
+          <a class="nav-link text-dark  my-4 " href="#"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-person-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+          </svg> Account</a>
+          <a class="nav-link text-dark  my-4" href="{% url 'cart' %}"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-cart-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm7 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
+          </svg> Cart <span class="badge badge-pill badge-primary" id="crtno">0</span></a>
+        </div>
+        </nav>
+        
+           <div class="container">
+        
+            <div class="row  p-3">
+              <div class="col-sm-6">
+                <div class="card w-100 h-100">
+                  <div class="card-body">
+                    <img src="{{product.image.url}}" class="card-img" alt="..." width="400" height="500" id="imgid">
+                    
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="card w-100 h-100 border-0">
+                  <div class="card-body">
+                    <h4 class="card-title" id='proname'>{{product.name}}</h4>
+                    <h5 class="card-text" id="prs">{{product.price}}</h5>
+                    <!-- <h6 class="card-text">Availability: {{detail.product.quantity_in_stock}} in stock</h6> -->
+                    <hr/>
+                    <input type="hidden" value="{{product.id}}" id="idp">
+
+                    <!-- <div class="row mt-3">
+                      <div class="col-sm-6">
+                        <h6 class="card-text" id='opn'>Select option</h6>
+                  
+                        </div>
+                       
+                        <div class="col-sm-6 mr-1 mt-1">
+                          <select class="custom-select">
+                            {% for var in variation %}
+                            <option value="{{var.id}}" >{{var.value}}</option>
+                            {% endfor %}
+                            
+                            
+  
+                          </select>
+                        </div> 
+    
+                    </div> -->
+                   
+
+    
+                    <div class="row mt-3">
+                      <div class="col-sm-6">
+                      <!-- <h6 class="card-text">Qty</h6> -->
+    
+                      </div>
+                      <div class="col-sm-6 mr-1">
+                        <div class="row  ">
+                          <div class="col-sm-1 ">
+                            <button class="btn btn-light mt-1 p-0 border-0" id='minus' style="width: 50px; height: 30px;">-</button>
+                          </div>
+                          <div class="col-sm-1 ml-4">
+                            <input type="text" class="mt-1" id="qt" style="width: 30px; outline: 0; text-align: center; border: none;" value="1" >
+                          </div>
+                          <div class="col-sm-1 mr-1">
+                            <button class="btn btn-light mt-1 p-0 border-0" id='plus' style="width: 50px; height: 30px;">+</button>
+                          </div>
+
+                        </div>
+    
+                      </div>
+    
+                    </div>
+                    <hr/>
+    
+                    <h6 class="card-text">DESCRIPTION</h6>
+                    <P class="card-text">{{product.description}}</P>
+                    <hr/>
+                    
+                    <h6 class="card-text mt-2">EXTRA DETAILS</h6>
+                    <P class="card-text">{{product.extra_detail}}</P>
+                    <hr/>
+    
+    
+                    <button type="button" class="btn btn-primary w-100" id="addcart">ADD TO CART</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+           
+
+           </div>
+
+
+   
+           <footer class="zz-footer-detail p-2">
+            <div class="d-flex justify-content-between">
+             <p class="my-4">&copy; 2010-2020 Privacy-Terms</p>
+            <div class="d-flex justify-content-end">
+             <img src="{% static 'img/master.png' %}" class="my-4" alt="">
+             <img src="{% static 'img/vis.png' %}" class="my-4" alt="" >
+            </div>
+            </div>
+     
+          </footer>
+    
+     
+<!-- jQuery and JS bundle w/ Popper.js -->
+<script src="{% static 'js/jquery-3.5.1.min.js' %}" ></script>
+<script src="{% static 'js/bootstrap.bundle.js' %}" ></script>
+<script src="{% static 'js/sweetalert2.all.min.js' %}" ></script>
+<script type="text/javascript"> 
+
+var Id = document.getElementById('idp').value;
+var price = document.getElementById('prs').textContent;
+var title = document.getElementById('proname').textContent;
+var image = document.getElementById('imgid')
+var button = document.getElementById('addcart');
+var imgeData = imgageTobase64(image);
+var input = document.getElementById('qt');
+var plusbtn = document.getElementById('plus');
+var minusbtn = document.getElementById('minus');
+var cart = document.getElementById('crtno');
+var data;
+
+// image to base64 function
+function imgageTobase64(img){
+  var canvas = document.createElement("canvas");
+  canvas.width = img.width;
+  canvas.height = img.height;
+  var ctx = canvas.getContext("2d");
+  ctx.drawImage(img, 0, 0);
+  return canvas.toDataURL();
+  
+}
+
+
+plusbtn.addEventListener('click', function(e){
+  e.preventDefault();
+var value = parseInt(input.value);
+if (value < 100) {
+      value = value +1;
+
+    }else{
+      value = 100
+    }
+
+input.setAttribute('value', value);
+
+});
+
+minusbtn.addEventListener('click', function(e){
+  e.preventDefault();
+var value = parseInt(input.value);
+if (value > 1) {
+      value = value -1;
+
+    }else{
+      value = 0
+    }
+input.setAttribute('value', value);
+
+});
+
+
+//add to cart button
+button.addEventListener('click', function(e){
+  e.preventDefault();
+  var item = [];
+
+//   for (const option of document.getElementById('opt').options) {
+//   if (option.selected) {
+//     selectedOption.push(option.value);
+//    }
+   
+// }
+// var element;
+// var sel = document.getElementsByTagName("select");
+// for (let index = 0; index < sel.length; index++) {
+//   element = sel[index].options;
+  
+// }
+
+
+// for (let index = 0; index < element.length; index++) {
+//   element = element[index].selected;
+//   selectedOption.push(element.value);
+  
+// }
+
+var checked = document.querySelectorAll("select :checked");
+var selected = [...checked].map(option => option.value);
+
+// console.log(selected);
+
+var quantity = document.getElementById('qt');
+data = {
+  'id':Id,
+  'title':title,
+  'price':price,
+  'qty':quantity.value,
+  // 'option': selected,
+  'image_url':imgeData
+};
+item.push(data);
+localStorage.setItem(Id, JSON.stringify(data));
+var cartNo = localStorage.length;
+cart.innerText = cartNo;
+
+Swal.fire({
+  title: 'Added to cart sucessfully',
+  icon: 'success'
+})
+
+// cart = JSON.parse(localStorage.getItem('cart'));
+// cart['cart']=JSON.stringify(item);
+// cart.push(data);
+// localStorage.setItem('cart', JSON.stringify(cart));
+// console.log(localStorage);
+
+});
+
+// $(document).ready(function(){ 
+
+// // plus quantity button contolller
+//   $('#minus').on('click', function(e){
+//     e.preventDefault();
+//     var input = $('#qt').val();
+//     var value = parseInt(input);
+
+//     if (value > 1) {
+//       value = value -1;
+
+//     }else{
+//       value = 0
+//     }
+//     $('#qt').val(value);
+//   });
+
+// plus quantity button contolller
+
+//   $('#plus').on('click', function(e){
+//     e.preventDefault();
+//     var input = $('#qt').val();
+//     var value = parseInt(input);
+
+  
+//     $('#qt').val(value);
+//   });
+
+
+// });
+ 
+</script>
+</body>
+</html>
