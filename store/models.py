@@ -1,4 +1,6 @@
 from django.db import models
+# from django_tenants.models import TenantMixin, DomainMixin
+# from tenant_users.tenants.models import TenantBase
 
 # Create your models here.
 
@@ -7,3 +9,6 @@ class Shop(models.Model):
     logo = models.ImageField(upload_to='logo', null=True, blank=True)
     description = models.CharField(max_length=256, null=True, blank=True)
     tagline = models.CharField(max_length=256, null=True, blank=True)
+
+# class Domain(DomainMixin):
+#     pass
