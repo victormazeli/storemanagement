@@ -73,9 +73,9 @@
           <tr>
             <th scope="col"></th>
             <th scope="col">TITLE</th>
-            <th scope="col">PRICE</th>
             <th scope="col">QTY</th>
-            <th scope="col">TOTAL</th>
+            <th scope="col">PRICE</th>
+            <!-- <th scope="col">TOTAL</th> -->
             <th scope="col"></th>
           </tr>
         </thead>
@@ -125,7 +125,7 @@ for (let index = 0; index < localStorage.length; index++) {
  var data = JSON.parse(element);
  var parsedtotal = parseInt(data.price);
  total.push(parsedtotal);
- $('#crt tbody').append('<tr><th scope="row"><img src="'+data.image_url+'" alt="" class="mx-0 my-0 mr-0 ml-0" style="width: 100px; height: 100px;"></th><td>'+data.title +'</td><td>'+data.price +'</td><td>'+data.qty +'</td><td>'+data.price+'</td><td><button class="btn btn-light remove" name="'+data.id+'"><span>&times;</span></button></td></tr>');
+ $('#crt tbody').append('<tr><th scope="row"><img src="'+data.image_url+'" alt="" class="mx-0 my-0 mr-0 ml-0" style="width: 100px; height: 100px;"></th><td>'+data.title +'</td><td>'+data.price +'</td><td>'+data.qty +'</td><td><button class="btn btn-light remove" name="'+data.id+'"><span>&times;</span></button></td></tr>');
   
 }
 
