@@ -9,4 +9,3 @@ def pre_save_create_order_id(sender, instance, *args, **kwargs):
 	if not instance.order_id:
 		instance.order_id = unique_order_id_generator(instance)
 
-pre_save.connect(pre_save_create_order_id, sender=Order)

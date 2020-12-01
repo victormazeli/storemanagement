@@ -1,3 +1,5 @@
+import random
+import string
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth import login, authenticate
@@ -13,7 +15,6 @@ from django.db.models import OuterRef, Subquery
 def index(request):
     product = Products.objects.all()[:10]
     return render(request, 'index.html', {'product_list':product} )
-
 
     
 
@@ -32,10 +33,14 @@ def Signup(request):
     return render(request, 'registration/signup.html', {'form':form})
 
 
+def randStr(chars=string.ascii_uppercase + string.digits, N=10):
+  return ''.join(random.choice(chars) for _ in range(N) )
+
+
 
 def payement(request):
     if request.method == 'POST':
-      refrence = request.POST.get('refrence')
+      refrence = randStr()
       email = request.POST.get('email')
       amount = int(float(request.POST.get('amount')))
       response = Transaction.initialize(reference=refrence, amount=amount, email=email)

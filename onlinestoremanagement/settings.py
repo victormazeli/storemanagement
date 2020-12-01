@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
+from datetime import timedelta
 PAYSTACK_SECRET_KEY  = "sk_test_6bf3f14e46177eef3a5d3606428d7280b3e8bc23"
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -21,15 +22,15 @@ TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates/')
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY')
-# SECRET_KEY = 'wiejiwiwrwiriw'
+# SECRET_KEY = os.environ.get('SECRET_KEY')
+SECRET_KEY = 'wiejiwiwrwiriw'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = int(os.environ.get('DEBUG', default=0))
-# DEBUG = True
+# DEBUG = int(os.environ.get('DEBUG', default=0))
+DEBUG = True
 
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOST').split(" ")
-# ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = os.environ.get('ALLOWED_HOST').split(" ")
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -89,6 +90,34 @@ REST_FRAMEWORK = {
     
 }
 
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=30),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+    'ROTATE_REFRESH_TOKENS': False,
+    'BLACKLIST_AFTER_ROTATION': True,
+    'UPDATE_LAST_LOGIN': False,
+
+    'ALGORITHM': 'HS256',
+    'SIGNING_KEY': SECRET_KEY,
+    'VERIFYING_KEY': None,
+    'AUDIENCE': None,
+    'ISSUER': None,
+
+    'AUTH_HEADER_TYPES': ('Bearer',),
+    'AUTH_HEADER_NAME': 'HTTP_AUTHORIZATION',
+    'USER_ID_FIELD': 'id',
+    'USER_ID_CLAIM': 'user_id',
+
+    'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
+    'TOKEN_TYPE_CLAIM': 'token_type',
+
+    'JTI_CLAIM': 'jti',
+
+    'SLIDING_TOKEN_REFRESH_EXP_CLAIM': 'refresh_exp',
+    'SLIDING_TOKEN_LIFETIME': timedelta(days=30),
+    'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
+}
+
 
 TEMPLATES = [
     {
@@ -113,23 +142,23 @@ WSGI_APPLICATION = 'onlinestoremanagement.wsgi.application'
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-         'ENGINE': os.environ.get('DATABASE_ENGINE'),
-         'NAME': os.environ.get('DATABASE_NAME'), 
-         'USER': os.environ.get('DATABASE_USER'), 
-         'PASSWORD': os.environ.get('DATABASE_PASSWORD'),
-         'HOST': os.environ.get('DATABASE_HOST'), 
-         'PORT': os.environ.get('DATABASE_PORT'),
-     }
-
     # 'default': {
-    #      'ENGINE': 'django_tenants.postgresql_backend',
-    #      'NAME': 'postgres', 
-    #      'USER': 'postgres', 
-    #      'PASSWORD': 'welcome@1',
-    #      'HOST': 'localhost', 
-    #      'PORT': '5432',
+    #      'ENGINE': os.environ.get('DATABASE_ENGINE'),
+    #      'NAME': os.environ.get('DATABASE_NAME'), 
+    #      'USER': os.environ.get('DATABASE_USER'), 
+    #      'PASSWORD': os.environ.get('DATABASE_PASSWORD'),
+    #      'HOST': os.environ.get('DATABASE_HOST'), 
+    #      'PORT': os.environ.get('DATABASE_PORT'),
     #  }
+
+    'default': {
+         'ENGINE': 'django_tenants.postgresql_backend',
+         'NAME': 'postgres', 
+         'USER': 'postgres', 
+         'PASSWORD': 'welcome@1',
+         'HOST': 'localhost', 
+         'PORT': '5432',
+     }
 }
 
 

@@ -11,13 +11,6 @@
         <!-- CSS -->
         <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
         <link rel="stylesheet" href="{% static 'css/style.css' %}">
-        <script>
-          window.onload = function (){
-            var cart = localStorage.length;
-            var cartid = document.getElementById('crtno');
-            cartid.innerText = cart;
-          }
-        </script>
   
     </head>
     <body>
@@ -36,8 +29,119 @@
               </nav>
 
        <!-- shippinf detail section     -->
+       <div class="container">
 
-       <div class="row p-5 m-0">
+        <div class="accordion mb-5 my-5" id="accordionExample">
+          <div class="card">
+            <div class="card-header" id="headingOne">
+              <h6 class="mb-0">
+                <a class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseThree">
+                  Customer Detail
+                </a>
+              </h6>
+            </div>
+        
+            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+              <div class="card-body">
+                <form>
+                  <fieldset>
+                    <legend>Contact Information</legend>
+                    <div class="form-group">
+                      <label for="formGroupExampleInput">Full Name</label>
+                      <input type="text" class="form-control" id="formGroupExampleInput" placeholder="{{user.firstname}}">
+                    </div>
+                    <div class="form-group">
+                      <label for="formGroupExampleInput2">Email Address</label>
+                      <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="{{user.email}}">
+                    </div>
+                    <div class="form-group">
+                      <label for="formGroupExampleInput">Mobile Number</label>
+                      <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input placeholder">
+                    </div>
+                  </fieldset>
+                  <fieldset>
+                    <legend>Shipping Address</legend>
+                    <div class="form-group">
+                      <label for="formGroupExampleInput">Address</label>
+                      <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input placeholder">
+                    </div>
+                    <div class="form-group">
+                      <label for="formGroupExampleInput2">City</label>
+                      <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Another input placeholder">
+                    </div>
+                    <div class="form-group">
+                      <label for="formGroupExampleInput">State</label>
+                      <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input placeholder">
+                    </div>
+                  </fieldset>
+                </form>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header" id="headingTwo">
+              <h6 class="mb-0">
+                <a class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseThree">
+                  Shipping Method
+                </a>
+              </h6>
+            </div>
+            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+              <div class="card-body">
+                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header" id="headingThree">
+              <h6 class="mb-0">
+                <a class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                  Order Summary 
+                </a>
+              </h6>
+            </div>
+            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+              <div class="card-body">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th scope="col"></th>
+                      <th scope="col">Product</th>
+                      <th scope="col">Quantity</th>
+                      <th scope="col">Price</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for order in orders %}
+                    <tr>
+                      <td><img src="{{order.cart.items.image.url}}" class=" img-fluid " alt="..." width="100" height="100"></td>
+                      <td>{{order.cart.items.name}}</td>
+                      <td>{{order.cart.qty}}</td>
+                      <td>{{order.cart.items.price}}</td>
+                      
+                    </tr>
+                    <tr>
+                      <td  colspan="2"></td>
+                      <td>Total</td>
+                      <td id="total">
+                      {{order.total_cost}}
+                    </td>
+                  </tr>
+                  {% endfor %}
+             
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <button class="btn btn-primary btn-block my-5" type="button" id="pay">
+          Proceed To Payment Method
+        </button>
+       </div>
+
+       <!-- <div class="row p-5 m-0">
          <div class="cols-6">
         <div class="card  mt-4 p-2" style="width: 710px; height: 189px;">
           <div class="card-body">
@@ -60,7 +164,7 @@
           </div>
       </div>    
 
-      <!-- <div class="card mt-4 p-2" style="width: 710px; height: 600px;">
+      <div class="card mt-4 p-2" style="width: 710px; height: 600px;">
         <div class="card-body">
             <h5 class="card-title">Shipping Address</h5>
            <div class="container my-4">
@@ -141,9 +245,9 @@
 
             
         </div>
-    </div>    -->
+    </div>   
 
-    <!-- <div class="card  mt-5 mb-4 p-2" style="width: 710px; height: 189px;">
+    <div class="card  mt-5 mb-4 p-2" style="width: 710px; height: 189px;">
         <div class="card-body">
             <h5 class="card-title">Shipping Method</h5>
             <div class="form-check">
@@ -159,7 +263,7 @@
                 </label>
               </div>
         </div>
-    </div> -->
+    </div>
 
     <button type="button" id="pay" class="btn btn-primary w-50 mx-auto  mt-2 mb-4">Continue to Payement</button>        
 
@@ -243,7 +347,7 @@
         </div>
 
        </div>
-    
+     -->
 
    
     <footer class="zz-footer-detail p-2">
@@ -265,7 +369,6 @@
 <script src="{% static 'js/sweetalert2.all.min.js' %}" ></script>
         <script type='text/javascript'>
         $(document).ready(function(){
-          var ref = 'refqqr23oken'
           var email = '{{user.email}}'
           var amount = $('#total').text();
           var token = '{{csrf_token}}';
@@ -273,7 +376,6 @@
 
           $('#pay').on('click', function(){
             var item = {
-              'refrence': ref,
               'email': email,
               'amount': amount
             }
@@ -287,7 +389,7 @@
               success: function(response){
                 var res = response['data'];
                 var url = res.authorization_url;
-                window.location.href = url
+                window.location.href = url;
 
               },
               error: function(response){

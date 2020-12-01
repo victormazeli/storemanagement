@@ -72,10 +72,10 @@
         <thead class="bg-light mt-2">
           <tr>
             <th scope="col"></th>
-            <th scope="col">TITLE</th>
-            <th scope="col">QTY</th>
+            <th scope="col">PRODUCT</th>
             <th scope="col">PRICE</th>
-            <!-- <th scope="col">TOTAL</th> -->
+            <th scope="col">QTY</th>
+            <th scope="col">TOTAL</th>
             <th scope="col"></th>
           </tr>
         </thead>
@@ -108,7 +108,7 @@
       </div>
       </div>
 
-    </footer>
+  </footer>
 
 <!-- jQuery and JS bundle w/ Popper.js -->
 <script src="{% static 'js/jquery-3.5.1.min.js' %}" ></script>
@@ -118,29 +118,49 @@
 $(document).ready(function(){
   var total = [];
   var gTotal;
+  var id = "{{user.id}}"
+
 
 for (let index = 0; index < localStorage.length; index++) {
  var key = localStorage.key(index);
  var element = localStorage.getItem(key);
  var data = JSON.parse(element);
- var parsedtotal = parseInt(data.price);
- total.push(parsedtotal);
- $('#crt tbody').append('<tr><th scope="row"><img src="'+data.image_url+'" alt="" class="mx-0 my-0 mr-0 ml-0" style="width: 100px; height: 100px;"></th><td>'+data.title +'</td><td>'+data.price +'</td><td>'+data.qty +'</td><td><button class="btn btn-light remove" name="'+data.id+'"><span>&times;</span></button></td></tr>');
+  var parsedtotal = parseInt(data.total);
+   total.push(parsedtotal);
+ 
+//  if (data.qty > 1) {
+//    var price_total = data.qty * data.price;
+//    var parsedtotal = parseInt(price_total);
+//     total.push(parsedtotal);
+//  }else{
+//    price_total = data.price;
+
+//  }
+ $('#crt tbody').append('<tr><td><img src="'+data.image_url+'" alt="" class="mx-0 my-0 mr-0 ml-0" style="width: 100px; height: 100px;"></td><td>'+data.title +'</td><td>'+data.price +'</td><td>'+data.qty +'</td><td>'+data.total +'</td><td><button class="btn btn-light  remove" name="'+data.id+'"><span><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/><path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/></svg></span></button></td></tr>');
   
 }
 
+
+
 if (localStorage.length == 0) {
   $('#total').text(0);
+  
 }else{
 
 gTotal = total.reduce(getTotal)
-$('#total').text(gTotal);
+var formatter = new Intl.NumberFormat('en-US', {
+  style: 'currency',
+  currency: 'NGN',
+  minimumFractionDigits: 0, 
+  
+});
+var formated = parseInt(gTotal);
+$('#total').text(formatter.format(formated));
 
 }
 
 
 // come back and resolve this hack 
-
 function getTotal(a, b){
   return a + b
 }
@@ -157,12 +177,17 @@ $('.remove').on('click', function(){
 
   Swal.fire({
   title: 'Item removed sucessfully',
-  icon: 'success'
+  icon: 'success',
+  timer: 2000,
+  showConfirmButton: false
 });
 
 
 
 });
+
+
+
 
 $('#checkout').on('click', function(e){
   e.preventDefault();
@@ -183,14 +208,15 @@ $('#checkout').on('click', function(e){
   var item = {
     'customer': customerId,
     'items':data.id,
-    'qty':data.qty
+    'qty':data.qty,
+    'total':data.total
   };
 
   // var ser_item = item.serialize();
 
   if (customerId != undefined) {
     var token = '{{csrf_token}}';
-    var total = $('#total').text();
+
     
   $.ajax({
   headers: { "X-CSRFToken": token },
@@ -200,14 +226,17 @@ $('#checkout').on('click', function(e){
   dataType: 'json',
   success: function(response){
     localStorage.clear();
+    var cost = [];
     var res = JSON.parse(response['instance']);
-    var order = [];
+    cost.push(res[0].fields.total);
+    var total_cost = cost.reduce(getTotal);
+    
     var order_data = {
       'cart':res[0].pk,
       'customer_detail':res[0].fields.customer,
       'unpaid': 1,
       'opened': 1,
-      'total':total
+      'total':total_cost
     };
 
     $.ajax({

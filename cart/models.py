@@ -7,4 +7,5 @@ class Cart(models.Model):
     customer = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
     items = models.ForeignKey(Products, on_delete=models.CASCADE)
     qty = models.IntegerField(default=0)
+    total = models.IntegerField(default=0)
     updated_date = models.DateTimeField(auto_now=True)
