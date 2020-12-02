@@ -16,7 +16,7 @@ class Command(BaseCommand):
         # print('Done')
         # print(fdqn)
         user = Marchant.objects.create_superuser(email='admin@cyphertech.com.ng', password='awesome21')
-        tenant = Shop(schema_name='public', name='zeus-admin', user=user)
+        tenant = Shop(schema_name='public', name='zeus-admin', owner=user)
         tenant.save()
 
         # # Add one or more domains for the tenant
