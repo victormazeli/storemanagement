@@ -17,7 +17,7 @@ services:
         build: 
             context: .
             dockerfile: Dockerfile
-        command: sh -c "python manage.py flush --no-input && python manage.py migrate  && gunicorn onlinestoremanagement.wsgi:application --bind 0.0.0.0:8000"
+        command: sh -c "python manage.py flush --no-input && python manage.py migrate_schemas --shared && python manage.py new_tenant && gunicorn onlinestoremanagement.wsgi:application --bind 0.0.0.0:8000"
         volumes: 
             - static_volume:/usr/src/app/static
             - media_volume:/usr/src/app/media

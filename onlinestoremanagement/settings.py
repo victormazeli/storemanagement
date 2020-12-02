@@ -35,10 +35,17 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
-INSTALLED_APPS = [
+SHARED_APPS = (
+    'django_tenants',  # mandatory
+    'tenant_users.permissions', # Defined in both shared apps and tenant apps
+    'tenant_users.tenants',
+    'store',
+
+    'django.contrib.contenttypes',
+
+    # everything below here is optional
     'django.contrib.admin',
     'django.contrib.auth',
-    'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
@@ -46,16 +53,34 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken', 
     'djoser',
+    'marchants',
+    'crispy_forms',
+)
+
+TENANT_APPS = (
+    # The following Django contrib apps must be in TENANT_APPS
+    'django.contrib.contenttypes',
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'tenant_users.permissions',
+
+    # your tenant-specific apps
     'products',
     'cart',
     'orders',
     'Transactions',
-    'marchants',
-    'store',
-    'crispy_forms',
-]
+)
+
+INSTALLED_APPS = list(SHARED_APPS) + [app for app in TENANT_APPS if app not in SHARED_APPS]
+
+
+
 
 MIDDLEWARE = [
+    'django_tenants.middleware.main.TenantMainMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -70,6 +95,14 @@ ROOT_URLCONF = 'onlinestoremanagement.urls'
 AUTH_USER_MODEL = 'marchants.Marchant'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+TENANT_MODEL = "store.Shop" # app.Model
+
+TENANT_DOMAIN_MODEL = "store.Domain"  # app.Model
+
+TENANT_USERS_DOMAIN  = "cyphertech.com.ng"
+
+SESSION_COOKIE_DOMAIN = '.cyphertech.com.ng'
 
 REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': [
@@ -161,6 +194,13 @@ DATABASES = {
      }
 }
 
+DATABASE_ROUTERS = (
+    'django_tenants.routers.TenantSyncRouter',
+)
+
+AUTHENTICATION_BACKENDS = (
+    'tenant_users.permissions.backend.UserBackend',
+)
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
