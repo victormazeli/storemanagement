@@ -2,6 +2,7 @@ from django.core.management.base import BaseCommand
 from django.utils import timezone
 from marchants.models import Marchant
 from tenant_users.tenants.utils import create_public_tenant
+from tenant_users.tenants.tasks import provision_tenant
 
 class Command(BaseCommand):
     help = 'creates new public tenant'
