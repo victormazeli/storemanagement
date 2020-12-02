@@ -37,8 +37,6 @@ ALLOWED_HOSTS = os.environ.get('ALLOWED_HOST').split(" ")
 
 SHARED_APPS = (
     'django_tenants',  # mandatory
-    'tenant_users.permissions', # Defined in both shared apps and tenant apps
-    'tenant_users.tenants',
     'store',
     'marchants',
 
@@ -65,7 +63,6 @@ TENANT_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'tenant_users.permissions',
 
     # your tenant-specific apps
     'products',
@@ -100,9 +97,6 @@ TENANT_MODEL = "store.Shop" # app.Model
 
 TENANT_DOMAIN_MODEL = "store.Domain"  # app.Model
 
-TENANT_USERS_DOMAIN  = "cyphertech.com.ng"
-
-SESSION_COOKIE_DOMAIN = '.cyphertech.com.ng'
 
 REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': [
@@ -198,9 +192,6 @@ DATABASE_ROUTERS = (
     'django_tenants.routers.TenantSyncRouter',
 )
 
-AUTHENTICATION_BACKENDS = (
-    'tenant_users.permissions.backend.UserBackend',
-)
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators

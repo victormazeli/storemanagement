@@ -4,11 +4,10 @@ from django.contrib.auth.models import PermissionsMixin
 from django.utils.translation import gettext_lazy as _
 from django.utils import timezone
 from .managers import CustomUserManager
-from tenant_users.tenants.models import UserProfile
 
-# Create your models here.
+# Create your models here.  
 
-class Marchant(UserProfile):
+class Marchant(AbstractUser):
     username = None
     email = models.EmailField(_('email address'), unique=True)
     phone_no = models.IntegerField(null=True, blank=True)
@@ -25,6 +24,6 @@ class Marchant(UserProfile):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 
-    # objects = CustomUserManager()
+    objects = CustomUserManager()
 
 
