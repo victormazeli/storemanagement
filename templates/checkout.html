@@ -108,25 +108,19 @@
                       <th scope="col"></th>
                       <th scope="col">Product</th>
                       <th scope="col">Quantity</th>
-                      <th scope="col">Price</th>
+                      <th scope="col">total</th>
                     </tr>
                   </thead>
                   <tbody>
                     {% for order in orders %}
                     <tr>
-                      <td><img src="{{order.cart.items.image.url}}" class=" img-fluid " alt="..." width="100" height="100"></td>
-                      <td>{{order.cart.items.name}}</td>
-                      <td>{{order.cart.qty}}</td>
-                      <td>{{order.cart.items.price}}</td>
+                      <td><img src="{{order.product.image.url}}" class=" img-fluid " alt="..." width="100" height="100"></td>
+                      <td>{{order.product.name}}</td>
+                      <td>{{order.quantity}}</td>
+                      <td>{{order.total_price}}</td>
                       
                     </tr>
-                    <tr>
-                      <td  colspan="2"></td>
-                      <td>Total</td>
-                      <td id="total">
-                      {{order.total_cost}}
-                    </td>
-                  </tr>
+              
                   {% endfor %}
              
                   </tbody>
@@ -135,7 +129,9 @@
             </div>
           </div>
         </div>
-
+        {% for cost in order %}
+        <Span class="mr-auto">TOTAL:</Span><Span>NGN</Span><h2 id='total'>{{cost.total_cost}}</h2>
+        {% endfor %}
         <button class="btn btn-primary btn-block my-5" type="button" id="pay">
           Proceed To Payment Method
         </button>

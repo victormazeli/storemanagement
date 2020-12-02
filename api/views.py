@@ -14,10 +14,10 @@ from rest_framework.response import Response
 from cart.models import Cart
 from Transactions.models import Transaction
 from marchants.models import Marchant
-from orders.models import Orders
+from orders.models import Orders, OrderItems
 from products.models import Products, ProductImages, ProductVariation
 from store.models import Shop
-from .serializers import CartSerializer, OrderSerializer, ShopSerializer, ProductSerializer, ProductImagesSerializer, ProductVariationSerializer, ProductOptionSerializer, TransactionSerializer, UserSerializer
+from .serializers import CartSerializer, OrderSerializer, ShopSerializer, ProductSerializer, ProductImagesSerializer, ProductVariationSerializer, ProductOptionSerializer, TransactionSerializer, UserSerializer, OrderItemSerializer
 
 # Create your views here.
 # class StoreCustomersList(APIView):
@@ -80,8 +80,8 @@ class Orders(APIView):
     #  permission_classes = [IsAuthenticated]
 
      def get(self, request, format=True):
-        ordereditems = Orders.objects.all()
-        serializer = OrderSerializer(ordereditems, many=True)
+        ordereditems = OrderItems.objects.all()
+        serializer = OrderItemSerializer(ordereditems, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 class Createorders(APIView):

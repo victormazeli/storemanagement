@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from cart.models import Cart
-from orders.models import Orders
+from orders.models import Orders, OrderItems
 from products.models import Products, ProductImages, ProductVariation, ProductOption
 from Transactions.models import Transaction
 from marchants.models import Marchant
@@ -65,3 +65,10 @@ class OrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = Orders
         fields = '__all__'
+
+class OrderItemSerializer(serializers.ModelSerializer):
+    order_id = OrderSerializer(read_only=True)
+    product = ProductSerializer(read_only=True)
+    class Meta:
+        model = OrderItems
+        fields = ['order_id', 'product', 'quantity', 'total_price']

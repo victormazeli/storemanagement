@@ -191,7 +191,7 @@ $('.remove').on('click', function(){
 
 $('#checkout').on('click', function(e){
   e.preventDefault();
-  var customerId = $('#cusid').text();
+  var customerId = '{{user.id}}';
 
   if (localStorage.length == 0) {
     Swal.fire({
@@ -200,78 +200,69 @@ $('#checkout').on('click', function(e){
 });
 
   }else{
+    if (customerId != undefined) {
+      var token = '{{csrf_token}}';
+      var final_cost = gTotal;
+      console.log(customerId);
 
-  for (let index = 0; index < localStorage.length; index++) {
-  var key = localStorage.key(index);
-  var element = localStorage.getItem(key);
-  var data = JSON.parse(element);
-  var item = {
-    'customer': customerId,
-    'items':data.id,
-    'qty':data.qty,
-    'total':data.total
-  };
-
-  // var ser_item = item.serialize();
-
-  if (customerId != undefined) {
-    var token = '{{csrf_token}}';
-
-    
-  $.ajax({
-  headers: { "X-CSRFToken": token },
-  url:'{% url "addtocart" %}',
-  type: 'POST',
-  data: item,
-  dataType: 'json',
-  success: function(response){
-    localStorage.clear();
-    var cost = [];
-    var res = JSON.parse(response['instance']);
-    cost.push(res[0].fields.total);
-    var total_cost = cost.reduce(getTotal);
-    
-    var order_data = {
-      'cart':res[0].pk,
-      'customer_detail':res[0].fields.customer,
+      var order_data = {
+      'customer': customerId,
       'unpaid': 1,
       'opened': 1,
-      'total':total_cost
-    };
+      'total':final_cost
+      };
 
-    $.ajax({
+      $.ajax({
       headers: { "X-CSRFToken": token },
       url:'{% url "create-order" %}',
       type: 'POST',
       data: order_data,
       dataType: 'json',
-      success: function(){
-        window.location.href="{% url 'checkout' %}"
+      success: function(response){
+        var res = JSON.parse(response['instance']);
+        for (let index = 0; index < localStorage.length; index++) {
+          var key = localStorage.key(index);
+          var element = localStorage.getItem(key);
+          var data = JSON.parse(element);
+          var item = {
+            'order_id':res[0].pk,
+            'product':data.id,
+            'qty':data.qty,
+            'price_total':data.total,
+            };
+
+          $.ajax({
+          headers: { "X-CSRFToken": token },
+          url:'{% url "order-item" %}',
+          type: 'POST',
+          data: item,
+          dataType: 'json',
+          success: function(){
+            localStorage.clear();
+            window.location.href="{% url 'checkout' %}"
+
+            },
+         error: function(response){
+            console.log(response);
+          }
+        })
+     }
+
       },
       error: function(response){
         console.log(response);
       }
 
     });
-
-
-
-  
-    
-  },
-  error: function(response){
-    console.log(response);
-  }
-})
+   
 
 
   }else{
     window.location.href="{% url 'checkout' %}"
   }
-
-
  
-}
+
+  
 
   }
 });
