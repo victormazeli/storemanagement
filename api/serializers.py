@@ -14,10 +14,10 @@ class ShopSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-# class DomainSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = Domain
-#         fields = '__all__'
+class DomainSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Domain
+        fields = '__all__'
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
