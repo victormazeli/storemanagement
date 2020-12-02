@@ -13,8 +13,9 @@ class Command(BaseCommand):
         Marchant.objects.create_user(email='chuks@cyphertech.com.ng', password='awesome21', is_active=True, is_staff=True)
         provision_tenant("Chukstore", "chukstore", "chuks@cyphertech.com.ng", is_staff=True)
         Marchant.objects.create_user(email='maki@cyphertech.com.ng', password='awesome21', is_active=True, is_staff=True)
-        provision_tenant("Makistore", "makistore", "maki@cyphertech.com.ng", is_staff=True)
+        fdqn = provision_tenant("Makistore", "makistore", "maki@cyphertech.com.ng", is_staff=True)
         print('Done')
+        print(fdqn)
         # tenant = Shop(schema_name='public', name='zeus-admin', user=user)
         # tenant.save()
 

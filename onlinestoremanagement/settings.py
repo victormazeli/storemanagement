@@ -40,6 +40,7 @@ SHARED_APPS = (
     'tenant_users.permissions', # Defined in both shared apps and tenant apps
     'tenant_users.tenants',
     'store',
+    'marchants',
 
     'django.contrib.contenttypes',
 
@@ -53,7 +54,6 @@ SHARED_APPS = (
     'rest_framework',
     'rest_framework.authtoken', 
     'djoser',
-    'marchants',
     'crispy_forms',
 )
 
